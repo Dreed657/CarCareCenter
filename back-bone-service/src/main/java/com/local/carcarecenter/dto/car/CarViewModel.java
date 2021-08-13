@@ -1,11 +1,13 @@
 package com.local.carcarecenter.dto.car;
 
+import com.local.carcarecenter.dto.repair.RepairViewModel;
 import com.local.carcarecenter.model.enums.EngineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.Date;
 
 @Getter
@@ -14,8 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class CarViewModel {
 
-    // May be hidden
-    private String id;
+    // May should be hidden
+    private Integer id;
 
     private String VIN;
 
@@ -28,4 +30,6 @@ public class CarViewModel {
     private EngineType type;
 
     private Date createdAt;
+
+    private Collection<RepairViewModel> repairments;
 }

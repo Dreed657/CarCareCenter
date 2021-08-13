@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
-    private final CarRepository repository;
+    private final CarRepository cars;
 
     private final ModelMapper mapper;
 
     @Override
-    public CarViewModel getById(String id) {
-        var entity = this.repository.findById(id);
+    public CarViewModel getById(Integer id) {
+        var entity = this.cars.findById(id);
         entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
 
         return this.mapper.map(entity, CarViewModel.class);
@@ -29,7 +29,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<CarViewModel> getAll() {
-        return this.repository
+        return this.cars
                 .findAll()
                 .stream()
                 .map(c -> this.mapper.map(c, CarViewModel.class))
@@ -37,17 +37,22 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarViewModel create(CarInputModel model) {
-        var entity = this.mapper.map(model, Car.class);
+    public CarViewModel save(CarInputModel model) {
+        var entity = new Car();
 
-//        this.repository.save(entity);
+        entity.setYear(model.getYear());
+        entity.setModel(model.getModel());
+        entity.setType(model.getType());
+        entity.setManufacturer(model.getManufacturer());
+
+        this.cars.save(entity);
 
         return this.mapper.map(entity, CarViewModel.class);
     }
 
     @Override
-    public CarViewModel update(String id, CarInputModel model) {
-        var entity = this.repository.findById(id);
+    public CarViewModel update(Integer id, CarInputModel model) {
+        var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
 
         result.setVIN(model.getVIN());
@@ -56,15 +61,17 @@ public class CarServiceImpl implements CarService {
         result.setModel(model.getModel());
         result.setManufacturer(model.getManufacturer());
 
-        this.repository.save(result);
+        this.cars.save(result);
 
         return this.mapper.map(result, CarViewModel.class);
     }
 
     @Override
-    public boolean delete(String id) {
-        var entity = this.repository.findById(id);
-        entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
+    public boolean delete(Integer id) {
+        var entity = this.cars.findById(id);
+        var result = entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
+
+        this.cars.delete(result);
 
         return true;
     }

@@ -7,9 +7,9 @@ import java.util.List;
  * @param <V> ViewModel
  */
 public interface AbstractBaseService<I, V> {
-   V getById(String id);
+   V getById(Integer id);
    List<V> getAll();
-   V create(I model);
-   V update(String id, I model);
-   boolean delete(String id);
+   V save(I model);
+   V update(Integer id, I model);
+   boolean delete(Integer id);
 }

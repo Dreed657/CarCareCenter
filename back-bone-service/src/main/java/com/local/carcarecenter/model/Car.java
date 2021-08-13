@@ -5,20 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
+import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Car extends AbstractBaseEntity {
+public class Car {
 
-    @Column(nullable = false, length = 50)
+    public Car(){
+        super();
+        this.createdAt = new Date();
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(nullable = false, length = 17)
     private String VIN;
 
     @Column(nullable = false, length = 50)
@@ -32,6 +43,9 @@ public class Car extends AbstractBaseEntity {
 
     @Column(nullable = false)
     private EngineType type;
+
+    @Column
+    private Date createdAt;
 
     @OneToMany
     private Collection<Repair> repairments;

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface RepairRepository extends JpaRepository<Repair, String> {
+public interface RepairRepository extends JpaRepository<Repair, Integer> {
 }
