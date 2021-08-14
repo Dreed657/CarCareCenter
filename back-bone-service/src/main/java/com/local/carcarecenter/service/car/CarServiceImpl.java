@@ -2,6 +2,7 @@ package com.local.carcarecenter.service.car;
 
 import com.local.carcarecenter.dto.car.CarInputModel;
 import com.local.carcarecenter.dto.car.CarViewModel;
+import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.model.Car;
 import com.local.carcarecenter.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class CarServiceImpl implements CarService {
     private final ModelMapper mapper;
 
     @Override
-    public CarViewModel getById(Integer id) {
+    public CarViewModel getById(Integer id) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
         return this.mapper.map(result, CarViewModel.class);
     }
@@ -51,9 +52,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarViewModel update(Integer id, CarInputModel model) {
+    public CarViewModel update(Integer id, CarInputModel model) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
         result.setVIN(model.getVIN());
         result.setType(model.getType());
@@ -67,9 +68,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
         this.cars.delete(result);
 

@@ -2,6 +2,7 @@ package com.local.carcarecenter.service.item;
 
 import com.local.carcarecenter.dto.item.ItemInputModel;
 import com.local.carcarecenter.dto.item.ItemViewModel;
+import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.model.Item;
 import com.local.carcarecenter.repository.ItemRepository;
 import com.local.carcarecenter.repository.RepairRepository;
@@ -23,9 +24,9 @@ public class ItemServiceImpl implements ItemService {
     private final ModelMapper mapper;
 
     @Override
-    public ItemViewModel getById(Integer id) {
+    public ItemViewModel getById(Integer id) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Item was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 
         return this.mapper.map(result, ItemViewModel.class);
     }
@@ -40,9 +41,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemViewModel save(ItemInputModel model) {
+    public ItemViewModel save(ItemInputModel model) throws EntityNotFoundExecution {
         var repair = this.repairs.findById(model.getRepairId());
-        var repairResult = repair.orElseThrow(() -> new RuntimeException("Repair was not found!"));
+        var repairResult = repair.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 
         var item = new Item();
 
@@ -56,9 +57,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemViewModel update(Integer id, ItemInputModel model) {
+    public ItemViewModel update(Integer id, ItemInputModel model) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Item was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 
         result.setMetric(model.getMetric());
         result.setDescription(model.getDescription());
@@ -69,9 +70,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Item was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 
         this.items.delete(result);
 

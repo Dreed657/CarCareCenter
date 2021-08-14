@@ -1,10 +1,12 @@
 package com.local.carcarecenter.service.car;
 
 import com.local.carcarecenter.dto.car.CarViewModel;
+import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.model.Car;
 import com.local.carcarecenter.model.enums.EngineType;
 import com.local.carcarecenter.repository.CarRepository;
 import org.aspectj.lang.annotation.Before;
+import org.hibernate.annotations.NotFound;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +51,7 @@ class CarServiceImplTest {
     }
 
     @Test
-    void getById() {
+    void getById() throws EntityNotFoundExecution {
         // Arrange
         var car = cars.get(0);
         var id = car.getId();
@@ -68,7 +70,7 @@ class CarServiceImplTest {
     void getByIdThrowsExceptionWhenNotFound() {
         assertThatThrownBy(() -> {
             carService.getById(100);
-        }).isInstanceOf(RuntimeException.class)
+        }).isInstanceOf(EntityNotFoundExecution.class)
                 .hasMessageContaining("Car was not found!");
     }
 

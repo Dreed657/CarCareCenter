@@ -2,6 +2,7 @@ package com.local.carcarecenter.service.repair;
 
 import com.local.carcarecenter.dto.repair.RepairInputModel;
 import com.local.carcarecenter.dto.repair.RepairViewModel;
+import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.model.Repair;
 import com.local.carcarecenter.repository.CarRepository;
 import com.local.carcarecenter.repository.RepairRepository;
@@ -23,9 +24,9 @@ public class RepairServiceImpl implements RepairService {
     private final ModelMapper mapper;
 
     @Override
-    public RepairViewModel getById(Integer id) {
+    public RepairViewModel getById(Integer id) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Repair was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 
         return this.mapper.map(result, RepairViewModel.class);
     }
@@ -40,9 +41,9 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public RepairViewModel save(RepairInputModel model) {
+    public RepairViewModel save(RepairInputModel model) throws EntityNotFoundExecution {
         var car = this.cars.findById(model.getCarId());
-        var carResult = car.orElseThrow(() -> new RuntimeException("Car was not found!"));
+        var carResult = car.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
         var repair = new Repair();
 
@@ -56,9 +57,9 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public RepairViewModel update(Integer id, RepairInputModel model) {
+    public RepairViewModel update(Integer id, RepairInputModel model) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Repair was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 
         result.setMileage(model.getMileage());
         result.setStatus(model.getStatus());
@@ -69,9 +70,9 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
-        var result = entity.orElseThrow(() -> new RuntimeException("Repair was not found!"));
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 
         this.repairs.delete(result);
 

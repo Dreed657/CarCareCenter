@@ -2,6 +2,7 @@ package com.local.carcarecenter.controller;
 
 import com.local.carcarecenter.dto.repair.RepairInputModel;
 import com.local.carcarecenter.dto.repair.RepairViewModel;
+import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.service.repair.RepairService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,39 +24,27 @@ public class RepairController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RepairViewModel> getById(@PathVariable Integer id) {
-        try {
-            var result = service.getById(id);
-            return ResponseEntity.ok().body(result);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<RepairViewModel> getById(@PathVariable Integer id) throws EntityNotFoundExecution {
+        var result = service.getById(id);
+        return ResponseEntity.ok().body(result);
     }
 
     @PostMapping("/")
-    public ResponseEntity<RepairViewModel> create(@Valid @RequestBody RepairInputModel entity) {
+    public ResponseEntity<RepairViewModel> create(@Valid @RequestBody RepairInputModel entity) throws EntityNotFoundExecution {
         return ResponseEntity.ok().body(service.save(entity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RepairViewModel> update(@PathVariable Integer id, @Valid @RequestBody RepairInputModel entity) {
-        try {
-            var result = service.update(id, entity);
-            return ResponseEntity.ok().body(result);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<RepairViewModel> update(@PathVariable Integer id, @Valid @RequestBody RepairInputModel entity) throws EntityNotFoundExecution {
+        var result = service.update(id, entity);
+        return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
-        try {
-            service.getById(id);
-            service.delete(id);
+    public ResponseEntity<Boolean> delete(@PathVariable Integer id) throws EntityNotFoundExecution {
+        service.getById(id);
+        service.delete(id);
 
-            return ResponseEntity.ok(true);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(true);
     }
 }
