@@ -25,9 +25,9 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public RepairViewModel getById(Integer id) {
         var entity = this.repairs.findById(id);
-        entity.orElseThrow(() -> new RuntimeException("Repair was not found!"));
+        var result = entity.orElseThrow(() -> new RuntimeException("Repair was not found!"));
 
-        return this.mapper.map(entity, RepairViewModel.class);
+        return this.mapper.map(result, RepairViewModel.class);
     }
 
     @Override

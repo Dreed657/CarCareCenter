@@ -22,9 +22,9 @@ public class CarServiceImpl implements CarService {
     @Override
     public CarViewModel getById(Integer id) {
         var entity = this.cars.findById(id);
-        entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
+        var result = entity.orElseThrow(() -> new RuntimeException("Car was not found!"));
 
-        return this.mapper.map(entity, CarViewModel.class);
+        return this.mapper.map(result, CarViewModel.class);
     }
 
     @Override

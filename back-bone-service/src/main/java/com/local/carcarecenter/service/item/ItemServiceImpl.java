@@ -25,9 +25,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemViewModel getById(Integer id) {
         var entity = this.items.findById(id);
-        entity.orElseThrow(() -> new RuntimeException("Repair was not found!"));
+        var result = entity.orElseThrow(() -> new RuntimeException("Item was not found!"));
 
-        return this.mapper.map(entity, ItemViewModel.class);
+        return this.mapper.map(result, ItemViewModel.class);
     }
 
     @Override

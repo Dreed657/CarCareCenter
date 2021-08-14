@@ -2,10 +2,7 @@ package com.local.carcarecenter.dto.car;
 
 import com.local.carcarecenter.dto.repair.RepairViewModel;
 import com.local.carcarecenter.model.enums.EngineType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 import java.util.Date;
@@ -14,6 +11,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class CarViewModel {
 
     // May should be hidden
