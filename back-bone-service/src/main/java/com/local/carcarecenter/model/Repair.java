@@ -32,7 +32,20 @@ public class Repair {
     @Column
     private Date createdAt;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", foreignKey = @ForeignKey(name = "fk_rep2item"))
     private Set<Item> items = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Repair repair = (Repair) o;
+        return id.equals(repair.id) && mileage.equals(repair.mileage) && status == repair.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mileage, status);
+    }
 }

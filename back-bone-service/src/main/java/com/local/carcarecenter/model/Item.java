@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -34,4 +35,17 @@ public class Item {
 
     @Column
     private Date createdAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id.equals(item.id) && description.equals(item.description) && quantity.equals(item.quantity) && metric == item.metric;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, quantity, metric);
+    }
 }

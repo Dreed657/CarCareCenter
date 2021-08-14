@@ -25,7 +25,7 @@ public class Car {
         this.Model = model;
         this.Year = year;
         this.type = type;
-        this.repairments = null;
+        this.repairments = new HashSet<>();
         this.createdAt = new Date();
     }
 
@@ -51,7 +51,20 @@ public class Car {
     @Column
     private Date createdAt;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "repair_id", foreignKey = @ForeignKey(name = "fk_car2rep"))
     private Set<Repair> repairments = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return id.equals(car.id) && VIN.equals(car.VIN) && Manufacturer.equals(car.Manufacturer) && Model.equals(car.Model) && Year.equals(car.Year) && type == car.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, VIN, Manufacturer, Model, Year, type);
+    }
 }
