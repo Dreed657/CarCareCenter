@@ -3,16 +3,10 @@ package com.local.carcarecenter.model;
 import com.local.carcarecenter.model.enums.EngineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-import java.util.Collection;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -20,14 +14,24 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Car {
 
-    public Car(){
+    public Car() {
         super();
         this.createdAt = new Date();
     }
 
+    public Car(String VIN, String manufacturer, String model, Integer year, EngineType type) {
+        this.VIN = VIN;
+        this.Manufacturer = manufacturer;
+        this.Model = model;
+        this.Year = year;
+        this.type = type;
+        this.repairments = null;
+        this.createdAt = new Date();
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue
+    private Long id;
 
     @Column(nullable = false, length = 17)
     private String VIN;
@@ -48,5 +52,6 @@ public class Car {
     private Date createdAt;
 
     @OneToMany
-    private Collection<Repair> repairments;
+    @JoinColumn(name = "repair_id", foreignKey = @ForeignKey(name = "fk_car2rep"))
+    private Set<Repair> repairments = new HashSet<>();
 }

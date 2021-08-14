@@ -21,7 +21,7 @@ public class CarServiceImpl implements CarService {
     private final ModelMapper mapper;
 
     @Override
-    public CarViewModel getById(Integer id) throws EntityNotFoundExecution {
+    public CarViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
@@ -41,10 +41,11 @@ public class CarServiceImpl implements CarService {
     public CarViewModel save(CarInputModel model) {
         var entity = new Car();
 
-        entity.setYear(model.getYear());
-        entity.setModel(model.getModel());
-        entity.setType(model.getType());
+        entity.setVIN(model.getVIN());
         entity.setManufacturer(model.getManufacturer());
+        entity.setModel(model.getModel());
+        entity.setYear(model.getYear());
+        entity.setType(model.getType());
 
         this.cars.save(entity);
 
@@ -52,7 +53,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarViewModel update(Integer id, CarInputModel model) throws EntityNotFoundExecution {
+    public CarViewModel update(Long id, CarInputModel model) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
@@ -68,7 +69,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public boolean delete(Integer id) throws EntityNotFoundExecution {
+    public boolean delete(Long id) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 

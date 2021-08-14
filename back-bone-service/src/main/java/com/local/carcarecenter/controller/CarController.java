@@ -24,7 +24,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarViewModel> getById(@PathVariable Integer id) throws EntityNotFoundExecution {
+    public ResponseEntity<CarViewModel> getById(@PathVariable Long id) throws EntityNotFoundExecution {
         var result = service.getById(id);
         return ResponseEntity.ok().body(result);
     }
@@ -35,13 +35,13 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CarViewModel> update(@PathVariable Integer id, @Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
+    public ResponseEntity<CarViewModel> update(@PathVariable Long id, @Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
         var result = service.update(id, entity);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Integer id) throws EntityNotFoundExecution {
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) throws EntityNotFoundExecution {
         service.getById(id);
         service.delete(id);
 

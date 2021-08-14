@@ -24,7 +24,7 @@ public class ItemServiceImpl implements ItemService {
     private final ModelMapper mapper;
 
     @Override
-    public ItemViewModel getById(Integer id) throws EntityNotFoundExecution {
+    public ItemViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 
@@ -48,16 +48,18 @@ public class ItemServiceImpl implements ItemService {
         var item = new Item();
 
         item.setDescription(model.getDescription());
+        item.setQuantity(model.getQuantity());
         item.setMetric(model.getMetric());
-        item.setRepair(repairResult);
-
         this.items.save(item);
+
+        repairResult.getItems().add(item);
+        this.repairs.save(repairResult);
 
         return this.mapper.map(item, ItemViewModel.class);
     }
 
     @Override
-    public ItemViewModel update(Integer id, ItemInputModel model) throws EntityNotFoundExecution {
+    public ItemViewModel update(Long id, ItemInputModel model) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 
@@ -70,7 +72,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public boolean delete(Integer id) throws EntityNotFoundExecution {
+    public boolean delete(Long id) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 

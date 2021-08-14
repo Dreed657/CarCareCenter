@@ -4,12 +4,9 @@ import com.local.carcarecenter.model.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -17,14 +14,14 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Repair {
 
-    public Repair(){
+    public Repair() {
         super();
         this.createdAt = new Date();
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue
+    private Long id;
 
     @Column(nullable = false)
     private Long mileage;
@@ -35,9 +32,7 @@ public class Repair {
     @Column
     private Date createdAt;
 
-    @ManyToOne
-    private Car car;
-
     @OneToMany
-    private Collection<Item> items;
+    @JoinColumn(name = "item_id", foreignKey = @ForeignKey(name = "fk_rep2item"))
+    private Set<Item> items = new HashSet<>();
 }

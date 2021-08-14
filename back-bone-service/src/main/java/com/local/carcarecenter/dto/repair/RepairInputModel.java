@@ -13,5 +13,5 @@ import lombok.Setter;
 public class RepairInputModel {
     private Long mileage;
     private Status status;
-    private Integer carId;
+    private Long carId;
 }

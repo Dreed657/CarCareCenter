@@ -14,5 +14,5 @@ public class ItemInputModel {
     private String description;
     private Integer quantity;
     private Metric metric;
-    private Integer repairId;
+    private Long repairId;
 }

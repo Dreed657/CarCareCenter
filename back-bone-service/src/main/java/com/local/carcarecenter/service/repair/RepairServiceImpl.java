@@ -24,7 +24,7 @@ public class RepairServiceImpl implements RepairService {
     private final ModelMapper mapper;
 
     @Override
-    public RepairViewModel getById(Integer id) throws EntityNotFoundExecution {
+    public RepairViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 
@@ -49,15 +49,16 @@ public class RepairServiceImpl implements RepairService {
 
         repair.setMileage(model.getMileage());
         repair.setStatus(model.getStatus());
-        repair.setCar(carResult);
-
         this.repairs.save(repair);
+
+        carResult.getRepairments().add(repair);
+        this.cars.save(carResult);
 
         return this.mapper.map(repair, RepairViewModel.class);
     }
 
     @Override
-    public RepairViewModel update(Integer id, RepairInputModel model) throws EntityNotFoundExecution {
+    public RepairViewModel update(Long id, RepairInputModel model) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 
@@ -70,7 +71,7 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public boolean delete(Integer id) throws EntityNotFoundExecution {
+    public boolean delete(Long id) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));
 

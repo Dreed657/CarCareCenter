@@ -24,7 +24,7 @@ public class RepairController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RepairViewModel> getById(@PathVariable Integer id) throws EntityNotFoundExecution {
+    public ResponseEntity<RepairViewModel> getById(@PathVariable Long id) throws EntityNotFoundExecution {
         var result = service.getById(id);
         return ResponseEntity.ok().body(result);
     }
@@ -35,13 +35,13 @@ public class RepairController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RepairViewModel> update(@PathVariable Integer id, @Valid @RequestBody RepairInputModel entity) throws EntityNotFoundExecution {
+    public ResponseEntity<RepairViewModel> update(@PathVariable Long id, @Valid @RequestBody RepairInputModel entity) throws EntityNotFoundExecution {
         var result = service.update(id, entity);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Integer id) throws EntityNotFoundExecution {
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) throws EntityNotFoundExecution {
         service.getById(id);
         service.delete(id);
 
