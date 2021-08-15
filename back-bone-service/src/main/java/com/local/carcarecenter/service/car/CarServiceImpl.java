@@ -54,6 +54,10 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarViewModel update(Long id, CarInputModel model) throws EntityNotFoundExecution {
+        if (model == null) {
+            throw new IllegalArgumentException("You must provide an valid model!");
+        }
+
         var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
@@ -74,7 +78,6 @@ public class CarServiceImpl implements CarService {
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
         this.cars.delete(result);
-
         return true;
     }
 }
