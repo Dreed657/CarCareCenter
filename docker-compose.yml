@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+  db:
+    container_name: DB
+    image: mysql
+    volumes:
+      - db:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: CarCareCenter
+
+  frontend:
+    container_name: Client
+    build:
+      context: ./end-user-client
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - cars-network
+
+  backend:
+    container_name: Server
+    build:
+      context: ./back-bone-service
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - cars-network
+    links:
+      - db
+    depends_on:
+      - db
+
+networks:
+  cars-network:
+
+volumes:
+  db: {}
