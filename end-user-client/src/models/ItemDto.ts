@@ -1,5 +1,8 @@
+import {Metric} from "./enums/Metric";
+
 export default interface ItemDto {
   id: number;
-  createdAt: Date;
-  items: ItemDto[];
+  description: string;
+  quantity: number;
+  metric: Metric;
 }

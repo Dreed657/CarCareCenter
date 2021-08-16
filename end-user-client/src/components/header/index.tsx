@@ -1,22 +1,38 @@
 import React from "react";
-import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
+import {AppBar, BottomNavigation, BottomNavigationAction, Toolbar} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
+
+import HomeIcon from '@material-ui/icons/Home';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 const PageLayout = (props: any) => {
-  return (
-    <AppBar position="static" color="default">
-      <Toolbar>
-        <Typography variant="h6" color="inherit">
-          CarCareService
-        </Typography>
-        <Button variant="contained" color="primary">
-          Home
-        </Button>
-        <Button variant="contained" color="primary">
-          Stats
-        </Button>
-      </Toolbar>
-    </AppBar>
-  );
+    const [value, setValue] = React.useState(0);
+    const history = useHistory();
+
+    const handleChange = (event: any, newValue: any) => {
+        setValue(newValue);
+        switch (newValue) {
+            case 0:
+                history.push('/')
+                break;
+            case 1:
+                history.push('/stats')
+                break;
+        }
+    }
+
+    return (
+        <AppBar position="static" color="default">
+            <BottomNavigation
+                value={value}
+                onChange={handleChange}
+                showLabels
+            >
+                <BottomNavigationAction label="Home" icon={<HomeIcon/>}/>
+                <BottomNavigationAction label="Stats" icon={<AssessmentIcon/>}/>
+            </BottomNavigation>
+        </AppBar>
+    );
 };
 
 export default PageLayout;

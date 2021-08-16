@@ -1,11 +1,11 @@
-import { ThemeProvider } from "@material-ui/styles";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import CarDetailsPage from "./pages/car-details";
-import ErrorPage from "./pages/error";
+import { ThemeProvider } from "@material-ui/styles";
 
 import HomePage from "./pages/home";
 import StatsPage from "./pages/stats";
+import CarDetailsPage from "./pages/car-details";
+import ErrorPage from "./pages/error";
 
 import Themes from './themes';
 
@@ -14,10 +14,10 @@ function App() {
     <ThemeProvider theme={Themes.default}>
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={HomePage}></Route>
-          <Route path="/stats" exact component={StatsPage}></Route>
-          <Route path="/car/:id" exact component={CarDetailsPage}></Route>
-          <Route component={ErrorPage}></Route>
+          <Route path="/" exact component={HomePage}/>
+          <Route path="/stats" exact component={StatsPage}/>
+          <Route path="/car/:id" exact component={CarDetailsPage}/>
+          <Route component={ErrorPage}/>
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

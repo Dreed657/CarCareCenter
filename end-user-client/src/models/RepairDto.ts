@@ -1,9 +1,10 @@
-import { Metric } from "web-vitals";
-import { Status } from "./enums/Status";
+import ItemDto from "./ItemDto";
+import {Status} from "./enums/Status";
 
 export default interface RepairDto {
-  id: number;
-  description: string;
-  quantity: number;
-  metric: Metric;
+    id: number;
+    mileage: number;
+    status: Status;
+    createdAt: Date;
+    items: ItemDto[];
 }

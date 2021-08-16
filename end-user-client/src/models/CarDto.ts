@@ -8,6 +8,6 @@ export default interface CarDto {
   repairments: RepairDto[];
   year: number;
   vin: string;
-  manufaturer: string;
+  manufacturer: string;
   model: string;
 }

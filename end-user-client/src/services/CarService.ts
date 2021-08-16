@@ -8,7 +8,7 @@ class CarService {
         return axios.get<CarDto[]>(`${config.API_URL}/cars/`);
     }
 
-    getById(id: number): Promise<AxiosResponse> {
+    getById(id: string): Promise<AxiosResponse> {
         return axios.get<CarDto>(`${config.API_URL}/cars/${id}/`);
     }
 }
