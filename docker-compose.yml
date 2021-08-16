@@ -4,7 +4,7 @@ services:
     container_name: DB
     image: mysql
     volumes:
-      - db:/var/lib/mysql
+      - db_data:/var/lib/mysql
     restart: always
     ports:
       - "3306:3306"
@@ -27,15 +27,12 @@ services:
     build:
       context: ./back-bone-service
       dockerfile: ./Dockerfile
-    restart: always
     ports:
       - "8080:8080"
     environment:
       - "SPRING_PROFILES_ACTIVE=prod"
     networks:
       - cars-network
-    links:
-      - db
     depends_on:
       - db
 
@@ -43,4 +40,4 @@ networks:
   cars-network:
 
 volumes:
-  db: {}
+  db_data: {}
