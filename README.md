@@ -8,7 +8,7 @@ This is proof of concept application to show my skills of understaing the concep
 git clone https://github.com/Dreed657/CarCareCenter.git
 cd CarCareCenter
 
-# As the model not working spring app docker profile configuraiton is misconfigured!
+# As the moment, not working spring app docker profile configuraiton is misconfigured!
 docker-compose up
 ```
 
