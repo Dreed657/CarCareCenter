@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -35,6 +36,9 @@ public class Item {
 
     @Column
     private Date createdAt;
+
+    @Column(nullable = false)
+    private BigDecimal price = new BigDecimal("0.0");
 
     @Override
     public boolean equals(Object o) {

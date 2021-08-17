@@ -49,6 +49,7 @@ public class ItemServiceImpl implements ItemService {
 
         item.setDescription(model.getDescription());
         item.setQuantity(model.getQuantity());
+        item.setPrice(model.getPrice());
         item.setMetric(model.getMetric());
         this.items.save(item);
 
@@ -64,6 +65,7 @@ public class ItemServiceImpl implements ItemService {
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));
 
         result.setMetric(model.getMetric());
+        result.setPrice(model.getPrice());
         result.setDescription(model.getDescription());
 
         this.items.save(result);
