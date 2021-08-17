@@ -24,5 +24,7 @@ docker-compose up
 - [ ] Dockerize
 
 ## TO-DO List
+- Increase test overall code coverage
+- Finish end-user-client
 - Create cli-client
 - Create data seeder / fake user activity
