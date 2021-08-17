@@ -22,7 +22,7 @@ const PageLayout = (props: any) => {
     }
 
     return (
-        <AppBar position="static" color="default">
+        <AppBar elevation={1}  position="static" color="default">
             <BottomNavigation
                 value={value}
                 onChange={handleChange}

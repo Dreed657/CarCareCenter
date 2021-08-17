@@ -17,7 +17,7 @@ import javax.validation.constraints.Pattern;
 public class CarInputModel {
 
     @NotNull(message = "You must provide VIN number!")
-    @Pattern(regexp = "^[A-HJ-NPR-Za-hj-npr-z\\d]{8}[\\dX][A-HJ-NPR-Za-hj-npr-z\\d]{2}\\d{6}$", message = "Must provide valid VIN number")
+//    @Pattern(regexp = "^[A-HJ-NPR-Za-hj-npr-z\\d]{8}[\\dX][A-HJ-NPR-Za-hj-npr-z\\d]{2}\\d{6}$", message = "Must provide valid VIN number")
     private String VIN;
 
     @NotNull(message = "You must provide car's manufacturer!")
