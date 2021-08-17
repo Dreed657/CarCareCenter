@@ -2,7 +2,7 @@ package com.local.carcarecenter.model.enums;
 
 public enum Metric {
 
-    LITTER("Litter"),
+    LITER("Liter"),
     UNIT("Unit");
 
     private String _Metric = null;

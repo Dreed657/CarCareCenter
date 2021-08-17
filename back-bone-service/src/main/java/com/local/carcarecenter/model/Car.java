@@ -33,7 +33,7 @@ public class Car {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, length = 17)
+    @Column(nullable = false, length = 17, unique = true)
     private String VIN;
 
     @Column(nullable = false, length = 50)
