@@ -31,7 +31,12 @@ public class App {
             var command = scanner.nextLine();
 
             while (!command.toLowerCase(Locale.ROOT).equals("exit")) {
-                engine.Run(command);
+                try {
+                    engine.Run(command);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+
                 command = scanner.nextLine();
             }
 

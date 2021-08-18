@@ -14,9 +14,9 @@ import java.util.*;
 public class CarDTO {
     private Long id;
     private String vin;
-    private String Manufacturer;
-    private String Model;
-    private Integer Year;
+    private String manufacturer;
+    private String model;
+    private Integer year;
     private EngineType type;
     private Date createdAt;
     private Collection<RepairDTO> repairments;
@@ -30,9 +30,9 @@ public class CarDTO {
 
         sb.append("id=").append(id);
         sb.append(", vin='").append(vin).append('\'');
-        sb.append(", Manufacturer='").append(Manufacturer).append('\'');
-        sb.append(", Model='").append(Model).append('\'');
-        sb.append(", Year=").append(Year);
+        sb.append(", Manufacturer='").append(manufacturer).append('\'');
+        sb.append(", Model='").append(model).append('\'');
+        sb.append(", Year=").append(year);
         sb.append(", type=").append(type);
         sb.append(", createdAt=").append(formattedDate);
 

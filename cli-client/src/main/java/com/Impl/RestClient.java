@@ -52,9 +52,10 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        this.handleNotFound(response);
         log.info(response.body());
 
-        var CarDTO = gson.fromJson(response.body(), CarDTO.class);
+        var CarDTO = this.gson.fromJson(response.body(), CarDTO.class);
 
         log.info(String.format("Car with id: %s was with code: %s\n", CarDTO.getId(), response.statusCode()));
         return CarDTO;
@@ -62,7 +63,7 @@ public class RestClient {
 
     // POST http://localhost:8080/api/cars/
     public CarDTO createCar(CarInputModel model) throws IOException, InterruptedException {
-        var carJson = gson.toJson(model);
+        var carJson = this.gson.toJson(model);
 
         var request = HttpRequest
                 .newBuilder(URI.create(url + "/api/cars/"))
@@ -73,7 +74,7 @@ public class RestClient {
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
         log.info(response.body());
 
-        var carDto = gson.fromJson(response.body(), CarDTO.class);
+        var carDto = this.gson.fromJson(response.body(), CarDTO.class);
 
         log.info(String.format("Car with id: %s was with code: %s\n", carDto.getId(), response.statusCode()));
         return carDto;
@@ -88,9 +89,10 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        this.handleNotFound(response);
         log.info(response.body());
 
-        var repairDto = gson.fromJson(response.body(), RepairDTO.class);
+        var repairDto = this.gson.fromJson(response.body(), RepairDTO.class);
 
         log.info(String.format("Repair with id: %s was with code: %s\n", repairDto.getId(), response.statusCode()));
         return repairDto;
@@ -98,7 +100,7 @@ public class RestClient {
 
     // POST http://localhost:8080/api/repairs/
     public RepairDTO createRepair(RepairInputModel model) throws IOException, InterruptedException {
-        var repairJson = gson.toJson(model);
+        var repairJson = this.gson.toJson(model);
 
         var request = HttpRequest
                 .newBuilder(URI.create(url + "/api/repairs/"))
@@ -109,7 +111,7 @@ public class RestClient {
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
         log.info(response.body());
 
-        var repairDto = gson.fromJson(response.body(), RepairDTO.class);
+        var repairDto = this.gson.fromJson(response.body(), RepairDTO.class);
 
         log.info(String.format("Repair with id: %s was with code: %s\n", repairDto.getId(), response.statusCode()));
         return repairDto;
@@ -117,7 +119,7 @@ public class RestClient {
 
     // POST http://localhost:8080/api/items/
     public ItemDTO createItem(ItemInputModel model) throws IOException, InterruptedException {
-        var itemJson = gson.toJson(model);
+        var itemJson = this.gson.toJson(model);
 
         var request = HttpRequest
                 .newBuilder(URI.create(url + "/api/items/"))
@@ -128,9 +130,16 @@ public class RestClient {
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
         log.info(response.body());
 
-        var itemDto = gson.fromJson(response.body(), ItemDTO.class);
+        var itemDto = this.gson.fromJson(response.body(), ItemDTO.class);
 
         log.info(String.format("Item with id: %s was with code: %s\n", itemDto.getId(), response.statusCode()));
         return itemDto;
+    }
+
+    private void handleNotFound(HttpResponse response) {
+        if (response.statusCode() == 404) {
+            var body = this.gson.fromJson(String.valueOf(response.body()), ErrorResponse.class);
+            throw new IllegalArgumentException(body.getDetails()[0]);
+        }
     }
 }
