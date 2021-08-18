@@ -22,6 +22,7 @@ public class RepairViewModel {
     private BigDecimal totalPrice;
     private Set<ItemViewModel> items;
 
+    // Computed property to calculate totalPrice
     public BigDecimal getTotalPrice() {
         return this.getItems()
                 .stream()
