@@ -4,7 +4,7 @@ import com.Impl.Engine;
 import com.Impl.RestClient;
 
 import java.io.IOException;
-import java.net.ConnectException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
@@ -28,9 +28,16 @@ public class App {
         var engine = new Engine(client);
 
         try {
-            engine.Run();
+            var command = scanner.nextLine();
+
+            while (!command.toLowerCase(Locale.ROOT).equals("exit")) {
+                engine.Run(command);
+                command = scanner.nextLine();
+            }
+
+            System.out.println("Thank you!");
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

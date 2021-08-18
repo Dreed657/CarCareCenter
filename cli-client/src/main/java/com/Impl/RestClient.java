@@ -9,8 +9,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RestClient {
+    static Logger log = Logger.getLogger(RestClient.class.getName());
+
     private final HttpClient http = HttpClient.newHttpClient();
     private final Gson gson = new Gson();
 
@@ -18,6 +22,7 @@ public class RestClient {
     private final String url;
 
     public RestClient(String address, String port) {
+        log.setLevel(Level.SEVERE);
         this.url = protocol + address + ":" + port;
     }
 
@@ -28,9 +33,10 @@ public class RestClient {
                 .GET().build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        log.info(response.body());
 
         if (response.body().contains("UP")) {
-            System.out.println("Connection established!");
+            log.severe("Connection established!");
             return true;
         } else {
             throw new ClosedConnectionException("Cannot connect to the server!");
@@ -46,11 +52,11 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        log.info(response.body());
 
         var CarDTO = gson.fromJson(response.body(), CarDTO.class);
 
-        System.out.printf("Car with id: %s was with code: %s\n", CarDTO.getId(), response.statusCode());
+        log.info(String.format("Car with id: %s was with code: %s\n", CarDTO.getId(), response.statusCode()));
         return CarDTO;
     }
 
@@ -65,11 +71,11 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        log.info(response.body());
 
         var carDto = gson.fromJson(response.body(), CarDTO.class);
 
-        System.out.printf("Car with id: %s was with code: %s\n", carDto.getId(), response.statusCode());
+        log.info(String.format("Car with id: %s was with code: %s\n", carDto.getId(), response.statusCode()));
         return carDto;
     }
 
@@ -82,11 +88,11 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        log.info(response.body());
 
         var repairDto = gson.fromJson(response.body(), RepairDTO.class);
 
-        System.out.printf("Repair with id: %s was with code: %s\n", repairDto.getId(), response.statusCode());
+        log.info(String.format("Repair with id: %s was with code: %s\n", repairDto.getId(), response.statusCode()));
         return repairDto;
     }
 
@@ -101,11 +107,11 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        log.info(response.body());
 
         var repairDto = gson.fromJson(response.body(), RepairDTO.class);
 
-        System.out.printf("Repair with id: %s was with code: %s\n", repairDto.getId(), response.statusCode());
+        log.info(String.format("Repair with id: %s was with code: %s\n", repairDto.getId(), response.statusCode()));
         return repairDto;
     }
 
@@ -120,11 +126,11 @@ public class RestClient {
                 .build();
 
         var response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        log.info(response.body());
 
         var itemDto = gson.fromJson(response.body(), ItemDTO.class);
 
-        System.out.printf("Item with id: %s was with code: %s\n", itemDto.getId(), response.statusCode());
+        log.info(String.format("Item with id: %s was with code: %s\n", itemDto.getId(), response.statusCode()));
         return itemDto;
     }
 }
