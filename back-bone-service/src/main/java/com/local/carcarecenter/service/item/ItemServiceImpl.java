@@ -1,5 +1,6 @@
 package com.local.carcarecenter.service.item;
 
+import com.local.carcarecenter.dto.car.CarViewModel;
 import com.local.carcarecenter.dto.item.ItemInputModel;
 import com.local.carcarecenter.dto.item.ItemViewModel;
 import com.local.carcarecenter.exception.EntityNotFoundExecution;
@@ -8,9 +9,12 @@ import com.local.carcarecenter.repository.ItemRepository;
 import com.local.carcarecenter.repository.RepairRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +39,17 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemViewModel> getAll() {
         return this.items
                 .findAll()
+                .stream()
+                .map(c -> this.mapper.map(c, ItemViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ItemViewModel> getAllPaged(Optional<String> sortBy, Optional<Integer> page, Optional<Integer> size) {
+        return this.items.findAll(PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(5),
+                        Sort.Direction.ASC, sortBy.orElse("id")))
                 .stream()
                 .map(c -> this.mapper.map(c, ItemViewModel.class))
                 .collect(Collectors.toList());

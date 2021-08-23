@@ -1,5 +1,6 @@
 package com.local.carcarecenter.controller;
 
+import com.local.carcarecenter.dto.car.CarViewModel;
 import com.local.carcarecenter.dto.item.ItemInputModel;
 import com.local.carcarecenter.dto.item.ItemViewModel;
 import com.local.carcarecenter.exception.EntityNotFoundExecution;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,10 +20,14 @@ public class ItemController {
 
     private final ItemService service;
 
-    @GetMapping("/")
-    public ResponseEntity<List<ItemViewModel>> getAll() {
-        return ResponseEntity.ok().body(service.getAll());
+    @GetMapping()
+    public ResponseEntity<List<ItemViewModel>> getAllPaged(
+            @RequestParam Optional<Integer> page,
+            @RequestParam Optional<Integer> size,
+            @RequestParam Optional<String> sortBy) {
+        return ResponseEntity.ok().body(service.getAllPaged(sortBy, page, size));
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ItemViewModel> getById(@PathVariable Long id) throws EntityNotFoundExecution {

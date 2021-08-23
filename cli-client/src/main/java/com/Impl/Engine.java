@@ -2,6 +2,7 @@ package com.Impl;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Engine {
 
@@ -14,7 +15,7 @@ public class Engine {
     public void Run(String command) throws IOException, InterruptedException {
         var args = command.trim().split(" ");
 
-        var name = args[0].trim();
+        var name = args[0].trim().toLowerCase(Locale.ROOT);
 
         switch (name) {
             case "add":
@@ -37,6 +38,8 @@ public class Engine {
             case "export":
                 System.out.println("Export command!");
                 break;
+            default:
+                System.out.println("Invalid command!");
         }
     }
 }

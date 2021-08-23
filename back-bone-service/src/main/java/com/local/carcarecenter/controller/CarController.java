@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,9 +19,12 @@ public class CarController {
 
     private final CarService service;
 
-    @GetMapping("/")
-    public ResponseEntity<List<CarViewModel>> getAll() {
-        return ResponseEntity.ok().body(service.getAll());
+    @GetMapping()
+    public ResponseEntity<List<CarViewModel>> getAllPaged(
+            @RequestParam Optional<Integer> page,
+            @RequestParam Optional<Integer> size,
+            @RequestParam Optional<String> sortBy) {
+        return ResponseEntity.ok().body(service.getAllPaged(sortBy, page, size));
     }
 
     @GetMapping("/{id}")

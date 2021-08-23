@@ -7,9 +7,12 @@ import com.local.carcarecenter.model.Car;
 import com.local.carcarecenter.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +35,17 @@ public class CarServiceImpl implements CarService {
     public List<CarViewModel> getAll() {
         return this.cars
                 .findAll()
+                .stream()
+                .map(c -> this.mapper.map(c, CarViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CarViewModel> getAllPaged(Optional<String> sortBy, Optional<Integer> page, Optional<Integer> size) {
+        return this.cars.findAll(PageRequest.of(
+                        page.orElse(0),
+                        size.orElse(5),
+                        Sort.Direction.ASC, sortBy.orElse("id")))
                 .stream()
                 .map(c -> this.mapper.map(c, CarViewModel.class))
                 .collect(Collectors.toList());
