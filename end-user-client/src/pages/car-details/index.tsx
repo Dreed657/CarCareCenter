@@ -4,27 +4,17 @@ import {useParams} from "react-router-dom";
 // @ts-ignore
 import ReactTimeAgo from 'react-time-ago'
 
-import AutorenewIcon from '@material-ui/icons/Autorenew';
-import DoneIcon from '@material-ui/icons/Done';
-
 import PageLayout from "../../components/page-layout";
 import CarService from "../../services/CarService";
 import CarDto from "../../models/CarDto";
 
 import {
-    Chip,
     Divider,
     Grid,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
 } from "@material-ui/core";
+
 import Loader from "../../components/loader";
-import {Status} from "../../models/enums/Status";
+import RepairsTable from "./tables/repair-table";
 
 interface paramsQuery {
     id: string
@@ -66,39 +56,7 @@ const CarDetailsPage = () => {
                         </Grid>
                         <Divider orientation="vertical" flexItem/>
                         <Grid item xs={9}>
-                            <TableContainer component={Paper}>
-                                <Table aria-label="custom pagination table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Id</TableCell>
-                                            <TableCell>Mileage</TableCell>
-                                            <TableCell>Added ago</TableCell>
-                                            <TableCell>Status</TableCell>
-                                            <TableCell>Items</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {car.repairments.map((repair) => (
-                                            <TableRow key={repair.id} hover>
-                                                <TableCell>{repair.id}</TableCell>
-                                                <TableCell>{repair.mileage}</TableCell>
-                                                <TableCell><ReactTimeAgo date={repair?.createdAt}
-                                                                         locale="en"/></TableCell>
-                                                <TableCell>
-                                                    {repair.status.toString().toLowerCase() === Status.PROGRESS.toString().toLowerCase() ? (
-                                                        <Chip label="In-Progress" variant="outlined" color="primary"
-                                                              size="small" icon={<AutorenewIcon/>}/>
-                                                    ) : (
-                                                        <Chip label="Finished" variant="outlined" color="secondary"
-                                                              size="small" icon={<DoneIcon/>}/>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell>{repair.items.length}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            <RepairsTable carId={car.id} />
                         </Grid>
                     </Grid>
                 </>

@@ -6,5 +6,6 @@ export default interface RepairDto {
     mileage: number;
     status: Status;
     createdAt: Date;
+    totalPrice: number;
     items: ItemDto[];
 }

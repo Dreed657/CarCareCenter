@@ -13,7 +13,7 @@ class CarService {
     }
 
     getCount(): Promise<AxiosResponse> {
-        return axios.get(`${(config.API_URL)}/cars/count`);
+        return axios.get<number>(`${(config.API_URL)}/cars/count`);
     }
 }
 
