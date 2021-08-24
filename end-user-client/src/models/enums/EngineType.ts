@@ -1,5 +1,5 @@
 export enum EngineType {
-  "PETROL",
-  "DIESEL",
-  "ELECTRIC",
+    'PETROL',
+    'DIESEL',
+    'ELECTRIC',
 }

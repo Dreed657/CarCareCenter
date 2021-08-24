@@ -1,8 +1,8 @@
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from 'axios';
 
-import {config} from "../utils/ConfigUtil";
+import { config } from '../utils/ConfigUtil';
 
-import RepairDto from "../models/RepairDto";
+import RepairDto from '../models/RepairDto';
 
 class RepairService {
     getAll(page: number, size: number): Promise<AxiosResponse> {

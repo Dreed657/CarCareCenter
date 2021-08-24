@@ -1,4 +1,4 @@
-import {EngineType} from "./enums/EngineType";
+import { EngineType } from './enums/EngineType';
 
 export default interface CarShortDto {
     id: number;

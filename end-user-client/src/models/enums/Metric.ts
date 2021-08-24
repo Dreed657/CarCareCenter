@@ -1,4 +1,4 @@
 export enum Metric {
-  "LITER",
-  "UNIT",
+    'LITER',
+    'UNIT',
 }

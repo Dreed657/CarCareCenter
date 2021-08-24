@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Chip,
     Paper,
@@ -7,17 +7,19 @@ import {
     TableCell,
     TableContainer,
     TableFooter,
-    TableHead, TablePagination,
-    TableRow, Typography
-} from "@material-ui/core";
-import AutorenewIcon from "@material-ui/icons/Autorenew";
-import DoneIcon from "@material-ui/icons/Done";
+    TableHead,
+    TablePagination,
+    TableRow,
+    Typography,
+} from '@material-ui/core';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import DoneIcon from '@material-ui/icons/Done';
 
 // @ts-ignore
-import ReactTimeAgo from 'react-time-ago'
+import ReactTimeAgo from 'react-time-ago';
 
-import RepairDto from "../../../../models/RepairDto";
-import RepairService from "../../../../services/RepairService";
+import RepairDto from '../../../../models/RepairDto';
+import RepairService from '../../../../services/RepairService';
 
 interface CarRepairsTableProps {
     carId: number;
@@ -31,8 +33,8 @@ const RepairsTable = (props: CarRepairsTableProps) => {
     useEffect(() => {
         RepairService.getByCarId(props.carId).then(res => {
             setRepairs(res.data);
-        })
-    }, [props])
+        });
+    }, [props]);
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setPage(newPage);
@@ -47,7 +49,7 @@ const RepairsTable = (props: CarRepairsTableProps) => {
 
     return (
         <TableContainer component={Paper}>
-            <Table aria-label="custom pagination table">
+            <Table aria-label='custom pagination table'>
                 <TableHead>
                     <TableRow>
                         <TableCell>Id</TableCell>
@@ -65,31 +67,31 @@ const RepairsTable = (props: CarRepairsTableProps) => {
                                 <TableCell>{repair.id}</TableCell>
                                 <TableCell>{repair.mileage}</TableCell>
                                 <TableCell><ReactTimeAgo date={repair?.createdAt}
-                                                         locale="en"/></TableCell>
+                                                         locale='en' /></TableCell>
                                 <TableCell>
-                                    {repair.status.toString() === "PROGRESS" ? (
-                                        <Chip label="In-Progress" variant="outlined" color="primary"
-                                              size="small" icon={<AutorenewIcon/>}/>
+                                    {repair.status.toString() === 'PROGRESS' ? (
+                                        <Chip label='In-Progress' variant='outlined' color='primary'
+                                              size='small' icon={<AutorenewIcon />} />
                                     ) : (
-                                        <Chip label="Finished" variant="outlined" color="secondary"
-                                              size="small" icon={<DoneIcon/>}/>
+                                        <Chip label='Finished' variant='outlined' color='secondary'
+                                              size='small' icon={<DoneIcon />} />
                                     )}
                                 </TableCell>
                                 <TableCell>{repair.totalPrice}</TableCell>
                                 <TableCell>{repair.items.length}</TableCell>
-                            </TableRow>)
+                            </TableRow>),
                         )}
                     </TableBody>
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, {label: 'All', value: repairs.length}]}
+                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: repairs.length }]}
                                 colSpan={3}
                                 count={repairs.length}
                                 rowsPerPage={size}
                                 page={page}
                                 SelectProps={{
-                                    inputProps: {'aria-label': 'rows per page'},
+                                    inputProps: { 'aria-label': 'rows per page' },
                                     native: true,
                                 }}
                                 onPageChange={handleChangePage}
@@ -99,14 +101,14 @@ const RepairsTable = (props: CarRepairsTableProps) => {
                     </TableFooter>
                 </> : (
                     <TableRow>
-                        <Typography variant="h5" gutterBottom align={"center"}>
+                        <Typography variant='h5' gutterBottom align={'center'}>
                             No repairs added to this car!
                         </Typography>
                     </TableRow>
                 )}
             </Table>
         </TableContainer>
-    )
-}
+    );
+};
 
 export default RepairsTable;

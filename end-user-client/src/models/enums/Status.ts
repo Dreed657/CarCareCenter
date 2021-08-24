@@ -1,4 +1,4 @@
 export enum Status {
-  "FINISHED",
-  "PROGRESS",
+    'FINISHED',
+    'PROGRESS',
 }

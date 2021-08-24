@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useHistory} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Paper,
     Table,
@@ -9,16 +9,16 @@ import {
     TableFooter,
     TableHead,
     TablePagination,
-    TableRow
-} from "@material-ui/core";
+    TableRow,
+} from '@material-ui/core';
 
 // @ts-ignore
-import ReactTimeAgo from 'react-time-ago'
+import ReactTimeAgo from 'react-time-ago';
 
-import Loader from "../../../../components/loader";
+import Loader from '../../../../components/loader';
 
-import CarService from "../../../../services/CarService";
-import CarShortDto from "../../../../models/CarShortDto";
+import CarService from '../../../../services/CarService';
+import CarShortDto from '../../../../models/CarShortDto';
 
 const CarTable = () => {
     const history = useHistory();
@@ -50,12 +50,12 @@ const CarTable = () => {
     };
 
     const handleClick = (id: number) => {
-        history.push("/car/" + id);
+        history.push('/car/' + id);
     };
 
     return (
         <TableContainer component={Paper}>
-            <Table stickyHeader aria-label="simple table">
+            <Table stickyHeader aria-label='simple table'>
                 <TableHead>
                     <TableRow>
                         <TableCell>Id</TableCell>
@@ -79,7 +79,7 @@ const CarTable = () => {
                                     <TableCell>{car.vin}</TableCell>
                                     <TableCell>{car.type}</TableCell>
                                     <TableCell>{car.year}</TableCell>
-                                    <TableCell><ReactTimeAgo date={car?.createdAt} locale="en"/></TableCell>
+                                    <TableCell><ReactTimeAgo date={car?.createdAt} locale='en' /></TableCell>
                                     <TableCell>{car.repairmentsSize}</TableCell>
                                 </TableRow>
                             ))}
@@ -87,13 +87,13 @@ const CarTable = () => {
                         <TableFooter>
                             <TableRow>
                                 <TablePagination
-                                    rowsPerPageOptions={[5, 10, 25, {label: 'All', value: total}]}
+                                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: total }]}
                                     colSpan={4}
                                     count={total}
                                     rowsPerPage={size}
                                     page={page}
                                     SelectProps={{
-                                        inputProps: {'aria-label': 'rows per page'},
+                                        inputProps: { 'aria-label': 'rows per page' },
                                         native: true,
                                     }}
                                     onPageChange={handleChangePage}
@@ -103,11 +103,11 @@ const CarTable = () => {
                         </TableFooter>
                     </>
                 ) : (
-                    <Loader/>
+                    <Loader />
                 )}
             </Table>
         </TableContainer>
-    )
-}
+    );
+};
 
 export default CarTable;

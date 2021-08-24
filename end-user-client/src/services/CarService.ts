@@ -1,7 +1,7 @@
-import { config } from "../utils/ConfigUtil";
+import { config } from '../utils/ConfigUtil';
 
 import axios, { AxiosResponse } from 'axios';
-import CarDto from "../models/CarDto";
+import CarDto from '../models/CarDto';
 
 class CarService {
     getAll(page: number, size: number): Promise<AxiosResponse> {
