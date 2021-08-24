@@ -4,6 +4,7 @@ import com.local.carcarecenter.dto.car.CarViewModel;
 import com.local.carcarecenter.dto.repair.RepairInputModel;
 import com.local.carcarecenter.dto.repair.RepairViewModel;
 import com.local.carcarecenter.exception.EntityNotFoundExecution;
+import com.local.carcarecenter.model.Car;
 import com.local.carcarecenter.model.Repair;
 import com.local.carcarecenter.repository.CarRepository;
 import com.local.carcarecenter.repository.RepairRepository;
@@ -98,5 +99,17 @@ public class RepairServiceImpl implements RepairService {
         this.repairs.delete(result);
 
         return true;
+    }
+
+    // TODO: FIX THIS DIRTY WORK!!#!#!#!#
+    @Override
+    public List<RepairViewModel> getAllByCarId(Long carId) throws EntityNotFoundExecution {
+        var entity = this.cars.findById(carId);
+        var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
+
+        return result.getRepairments()
+                .stream()
+                .map(r -> this.mapper.map(r, RepairViewModel.class))
+                .collect(Collectors.toList());
     }
 }

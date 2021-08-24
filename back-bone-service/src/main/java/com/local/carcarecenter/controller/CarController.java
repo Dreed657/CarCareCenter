@@ -1,7 +1,7 @@
 package com.local.carcarecenter.controller;
 
 import com.local.carcarecenter.dto.car.CarInputModel;
-import com.local.carcarecenter.dto.car.CarViewModel;
+import com.local.carcarecenter.dto.car.CarShortViewModel;
 import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.service.car.CarService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class CarController {
     private final CarService service;
 
     @GetMapping()
-    public ResponseEntity<List<CarViewModel>> getAllPaged(
+    public ResponseEntity<List<CarShortViewModel>> getAllPaged(
             @RequestParam Optional<Integer> page,
             @RequestParam Optional<Integer> size,
             @RequestParam Optional<String> sortBy) {
@@ -28,7 +28,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarViewModel> getById(@PathVariable Long id) throws EntityNotFoundExecution {
+    public ResponseEntity<CarShortViewModel> getById(@PathVariable Long id) throws EntityNotFoundExecution {
         var result = service.getById(id);
         return ResponseEntity.ok().body(result);
     }
@@ -40,12 +40,12 @@ public class CarController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CarViewModel> create(@Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
+    public ResponseEntity<CarShortViewModel> create(@Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
         return ResponseEntity.ok().body(service.save(entity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CarViewModel> update(@PathVariable Long id, @Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
+    public ResponseEntity<CarShortViewModel> update(@PathVariable Long id, @Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
         var result = service.update(id, entity);
         return ResponseEntity.ok().body(result);
     }

@@ -16,12 +16,12 @@ import ReactTimeAgo from 'react-time-ago'
 import PageLayout from "../../components/page-layout";
 import Loader from "../../components/loader";
 
-import CarDto from "../../models/CarDto";
 import CarService from "../../services/CarService";
+import CarShortDto from "../../models/CarShortDto";
 
 const HomePage = () => {
     const [total, setTotal] = useState<number>(0);
-    const [cars, setCars] = useState<CarDto[]>([]);
+    const [cars, setCars] = useState<CarShortDto[]>([]);
     const [page, setPage] = React.useState<number>(0);
     const [size, setSize] = React.useState<number>(5);
 
@@ -80,15 +80,15 @@ const HomePage = () => {
                                         <TableCell>{car.type}</TableCell>
                                         <TableCell>{car.year}</TableCell>
                                         <TableCell><ReactTimeAgo date={car?.createdAt} locale="en"/></TableCell>
-                                        <TableCell>{car.repairments.length}</TableCell>
+                                        <TableCell>{car.repairmentsSize}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
-                                        colSpan={3}
+                                        rowsPerPageOptions={[5, 10, 25, {label: 'All', value: total}]}
+                                        colSpan={4}
                                         count={total}
                                         rowsPerPage={size}
                                         page={page}
