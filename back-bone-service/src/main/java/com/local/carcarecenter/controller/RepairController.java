@@ -28,10 +28,15 @@ public class RepairController {
         return ResponseEntity.ok().body(service.getAllPaged(sortBy, page, size));
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<RepairViewModel> getById(@PathVariable Long id) throws EntityNotFoundExecution {
         var result = service.getById(id);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCount() throws EntityNotFoundExecution {
+        var result = service.getCount();
         return ResponseEntity.ok().body(result);
     }
 

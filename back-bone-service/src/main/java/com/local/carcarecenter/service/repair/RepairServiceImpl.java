@@ -28,6 +28,11 @@ public class RepairServiceImpl implements RepairService {
     private final ModelMapper mapper;
 
     @Override
+    public Long getCount() {
+        return this.repairs.count();
+    }
+
+    @Override
     public RepairViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.repairs.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Repair was not found!"));

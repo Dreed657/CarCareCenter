@@ -1,5 +1,5 @@
 import React from "react";
-import {AppBar, BottomNavigation, BottomNavigationAction, Toolbar} from "@material-ui/core";
+import {AppBar, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 
 import HomeIcon from '@material-ui/icons/Home';

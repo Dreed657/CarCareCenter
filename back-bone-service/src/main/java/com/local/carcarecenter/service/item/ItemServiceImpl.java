@@ -28,6 +28,11 @@ public class ItemServiceImpl implements ItemService {
     private final ModelMapper mapper;
 
     @Override
+    public Long getCount() {
+        return this.items.count();
+    }
+
+    @Override
     public ItemViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.items.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Item was not found!"));

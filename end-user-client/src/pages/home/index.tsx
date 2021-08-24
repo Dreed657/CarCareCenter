@@ -6,8 +6,8 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableContainer,
-    TableHead,
+    TableContainer, TableFooter,
+    TableHead, TablePagination,
     TableRow,
 } from "@material-ui/core";
 // @ts-ignore
@@ -20,15 +20,33 @@ import CarDto from "../../models/CarDto";
 import CarService from "../../services/CarService";
 
 const HomePage = () => {
+    const [total, setTotal] = useState<number>(0);
     const [cars, setCars] = useState<CarDto[]>([]);
+    const [page, setPage] = React.useState<number>(0);
+    const [size, setSize] = React.useState<number>(5);
 
     const history = useHistory();
 
     useEffect(() => {
-        CarService.getAll().then((res) => {
+        CarService.getCount().then(res => {
+            setTotal(res.data);
+        });
+
+        CarService.getAll(page, size).then((res) => {
             setCars(res.data);
         });
-    }, []);
+    }, [page, size]);
+
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setSize(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     const handleClick = (id: number) => {
         history.push("/car/" + id);
@@ -51,20 +69,39 @@ const HomePage = () => {
                         </TableRow>
                     </TableHead>
                     {cars.length !== 0 ? (
-                        <TableBody>
-                            {cars.map((car) => (
-                                <TableRow key={car.id} hover onClick={() => handleClick(car.id)}>
-                                    <TableCell>{car.id}</TableCell>
-                                    <TableCell>{car.manufacturer}</TableCell>
-                                    <TableCell>{car.model}</TableCell>
-                                    <TableCell>{car.vin}</TableCell>
-                                    <TableCell>{car.type}</TableCell>
-                                    <TableCell>{car.year}</TableCell>
-                                    <TableCell><ReactTimeAgo date={car?.createdAt} locale="en"/></TableCell>
-                                    <TableCell>{car.repairments.length}</TableCell>
+                        <>
+                            <TableBody>
+                                {cars.map((car) => (
+                                    <TableRow key={car.id} hover onClick={() => handleClick(car.id)}>
+                                        <TableCell>{car.id}</TableCell>
+                                        <TableCell>{car.manufacturer}</TableCell>
+                                        <TableCell>{car.model}</TableCell>
+                                        <TableCell>{car.vin}</TableCell>
+                                        <TableCell>{car.type}</TableCell>
+                                        <TableCell>{car.year}</TableCell>
+                                        <TableCell><ReactTimeAgo date={car?.createdAt} locale="en"/></TableCell>
+                                        <TableCell>{car.repairments.length}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
+                                        colSpan={3}
+                                        count={total}
+                                        rowsPerPage={size}
+                                        page={page}
+                                        SelectProps={{
+                                            inputProps: {'aria-label': 'rows per page'},
+                                            native: true,
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                    />
                                 </TableRow>
-                            ))}
-                        </TableBody>
+                            </TableFooter>
+                        </>
                     ) : (
                         <Loader/>
                     )}

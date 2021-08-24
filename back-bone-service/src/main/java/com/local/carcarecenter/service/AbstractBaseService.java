@@ -10,6 +10,7 @@ import java.util.Optional;
  * @param <V> ViewModel
  */
 public interface AbstractBaseService<I, V> {
+   Long getCount();
    V getById(Long id) throws EntityNotFoundExecution;
    List<V> getAll();
    List<V> getAllPaged(Optional<String> sortBy, Optional<Integer> page, Optional<Integer> size);

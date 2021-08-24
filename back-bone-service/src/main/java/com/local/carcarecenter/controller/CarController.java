@@ -33,6 +33,12 @@ public class CarController {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCount() throws EntityNotFoundExecution {
+        var result = service.getCount();
+        return ResponseEntity.ok().body(result);
+    }
+
     @PostMapping("/")
     public ResponseEntity<CarViewModel> create(@Valid @RequestBody CarInputModel entity) throws EntityNotFoundExecution {
         return ResponseEntity.ok().body(service.save(entity));

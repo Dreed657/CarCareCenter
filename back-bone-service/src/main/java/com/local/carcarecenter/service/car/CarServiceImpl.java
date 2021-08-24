@@ -24,6 +24,11 @@ public class CarServiceImpl implements CarService {
     private final ModelMapper mapper;
 
     @Override
+    public Long getCount() {
+        return this.cars.count();
+    }
+
+    @Override
     public CarViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
