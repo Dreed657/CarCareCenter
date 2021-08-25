@@ -1,7 +1,6 @@
 package com.local.carcarecenter.service.car;
 
 import com.local.carcarecenter.dto.car.CarInputModel;
-import com.local.carcarecenter.dto.car.CarShortViewModel;
 import com.local.carcarecenter.dto.car.CarViewModel;
 import com.local.carcarecenter.exception.EntityNotFoundExecution;
 import com.local.carcarecenter.model.Car;
@@ -30,35 +29,35 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarShortViewModel getById(Long id) throws EntityNotFoundExecution {
+    public CarViewModel getById(Long id) throws EntityNotFoundExecution {
         var entity = this.cars.findById(id);
         var result = entity.orElseThrow(() -> new EntityNotFoundExecution("Car was not found!"));
 
-        return this.mapper.map(result, CarShortViewModel.class);
+        return this.mapper.map(result, CarViewModel.class);
     }
 
     @Override
-    public List<CarShortViewModel> getAll() {
+    public List<CarViewModel> getAll() {
         return this.cars
                 .findAll()
                 .stream()
-                .map(c -> this.mapper.map(c, CarShortViewModel.class))
+                .map(c -> this.mapper.map(c, CarViewModel.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<CarShortViewModel> getAllPaged(Optional<String> sortBy, Optional<Integer> page, Optional<Integer> size) {
+    public List<CarViewModel> getAllPaged(Optional<String> sortBy, Optional<Integer> page, Optional<Integer> size) {
         return this.cars.findAll(PageRequest.of(
                         page.orElse(0),
                         size.orElse(5),
-                        Sort.Direction.ASC, sortBy.orElse("id")))
+                        Sort.Direction.DESC, sortBy.orElse("id")))
                 .stream()
-                .map(c -> this.mapper.map(c, CarShortViewModel.class))
+                .map(c -> this.mapper.map(c, CarViewModel.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CarShortViewModel save(CarInputModel model) {
+    public CarViewModel save(CarInputModel model) {
         var entity = new Car();
 
         entity.setVIN(model.getVIN());
@@ -69,11 +68,11 @@ public class CarServiceImpl implements CarService {
 
         this.cars.save(entity);
 
-        return this.mapper.map(entity, CarShortViewModel.class);
+        return this.mapper.map(entity, CarViewModel.class);
     }
 
     @Override
-    public CarShortViewModel update(Long id, CarInputModel model) throws EntityNotFoundExecution {
+    public CarViewModel update(Long id, CarInputModel model) throws EntityNotFoundExecution {
         if (model == null) {
             throw new IllegalArgumentException("You must provide an valid model!");
         }
@@ -89,7 +88,7 @@ public class CarServiceImpl implements CarService {
 
         this.cars.save(result);
 
-        return this.mapper.map(result, CarShortViewModel.class);
+        return this.mapper.map(result, CarViewModel.class);
     }
 
     @Override

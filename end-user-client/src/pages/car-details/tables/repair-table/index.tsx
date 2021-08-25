@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Chip,
     Paper,
     Table,
     TableBody,
@@ -12,14 +11,10 @@ import {
     TableRow,
     Typography,
 } from '@material-ui/core';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
-import DoneIcon from '@material-ui/icons/Done';
-
-// @ts-ignore
-import ReactTimeAgo from 'react-time-ago';
 
 import RepairDto from '../../../../models/RepairDto';
 import RepairService from '../../../../services/RepairService';
+import RepairRow from '../repair-row';
 
 interface CarRepairsTableProps {
     carId: number;
@@ -52,9 +47,10 @@ const RepairsTable = (props: CarRepairsTableProps) => {
             <Table aria-label='custom pagination table'>
                 <TableHead>
                     <TableRow>
+                        <TableCell />
                         <TableCell>Id</TableCell>
                         <TableCell>Mileage</TableCell>
-                        <TableCell>Added ago</TableCell>
+                        <TableCell>Added</TableCell>
                         <TableCell>Status</TableCell>
                         <TableCell>Total</TableCell>
                         <TableCell>Items</TableCell>
@@ -63,23 +59,7 @@ const RepairsTable = (props: CarRepairsTableProps) => {
                 {repairs.length > 0 ? <>
                     <TableBody>
                         {repairs.slice(page * size, page * size + size).map((repair) =>
-                            (<TableRow key={repair.id} hover>
-                                <TableCell>{repair.id}</TableCell>
-                                <TableCell>{repair.mileage}</TableCell>
-                                <TableCell><ReactTimeAgo date={repair?.createdAt}
-                                                         locale='en' /></TableCell>
-                                <TableCell>
-                                    {repair.status.toString() === 'PROGRESS' ? (
-                                        <Chip label='In-Progress' variant='outlined' color='primary'
-                                              size='small' icon={<AutorenewIcon />} />
-                                    ) : (
-                                        <Chip label='Finished' variant='outlined' color='secondary'
-                                              size='small' icon={<DoneIcon />} />
-                                    )}
-                                </TableCell>
-                                <TableCell>{repair.totalPrice}</TableCell>
-                                <TableCell>{repair.items.length}</TableCell>
-                            </TableRow>),
+                            (<RepairRow repair={repair}/>)
                         )}
                     </TableBody>
                     <TableFooter>

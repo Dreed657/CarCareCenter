@@ -5,4 +5,5 @@ export default interface ItemDto {
     description: string;
     quantity: number;
     metric: Metric;
+    price: number;
 }

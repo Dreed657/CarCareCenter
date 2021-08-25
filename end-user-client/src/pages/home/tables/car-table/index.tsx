@@ -18,12 +18,12 @@ import ReactTimeAgo from 'react-time-ago';
 import Loader from '../../../../components/loader';
 
 import CarService from '../../../../services/CarService';
-import CarShortDto from '../../../../models/CarShortDto';
+import CarDto from '../../../../models/CarDto';
 
 const CarTable = () => {
     const history = useHistory();
 
-    const [cars, setCars] = useState<CarShortDto[]>([]);
+    const [cars, setCars] = useState<CarDto[]>([]);
     const [total, setTotal] = useState<number>(0);
     const [page, setPage] = React.useState<number>(0);
     const [size, setSize] = React.useState<number>(5);
@@ -80,7 +80,7 @@ const CarTable = () => {
                                     <TableCell>{car.type}</TableCell>
                                     <TableCell>{car.year}</TableCell>
                                     <TableCell><ReactTimeAgo date={car?.createdAt} locale='en' /></TableCell>
-                                    <TableCell>{car.repairmentsSize}</TableCell>
+                                    <TableCell>{car.repairments.length}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         fab: {
             position: 'absolute',
-            bottom: theme.spacing(2),
             right: theme.spacing(2),
+            bottom: theme.spacing(2),
         },
         wrapper: {
             margin: theme.spacing(1),
@@ -108,7 +108,7 @@ const CreateCarDialog = () => {
             .then(res => {
                 console.log(res);
                 setLoading(false);
-                // setOpen(false);
+                setOpen(false);
             }).catch(e => {
             console.log(e.response.data.details);
             setLoading(false);
